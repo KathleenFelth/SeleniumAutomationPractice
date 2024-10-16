@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ public class AutoTest {
         @BeforeMethod
                 public void setup(){
 
-            WebDriverManager.chromedriver().driverVersion("126.0.6478.126 ").setup();
+            WebDriverManager.chromedriver().driverVersion("130.0.6723.58").setup();
 
 
             driver = new ChromeDriver();
@@ -92,7 +93,7 @@ public class AutoTest {
 
               WebElement datepickersel2 = driver.findElement(By.xpath("/html/body/div[4]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div/div[4]/div[1]/div/div/div[1]/div[1]/div/div/div/div/div[2]/p[2]/input"));
               datepickersel2.click();
-              WebElement datepicker2 = driver.findElement(By.xpath("/html/body/div[5]/table/tbody/tr[3]/td[5]/a"));
+              WebElement datepicker2 = driver.findElement(By.xpath("/html/body/div[5]/table/tbody/tr[4]/td[7]"));
               datepicker2.click();
 
 
@@ -242,16 +243,30 @@ public class AutoTest {
               Actions slide = new Actions(driver);
               slide.dragAndDropBy(slider, 67, 0).perform();
 
-              WebElement resize = wait.until(ExpectedConditions.elementToBeClickable((By.id("resizable"))));
+              WebElement resize = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[4]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div/div[4]/div[3]/div/aside/div/div[9]/div[1]/div/div[3]")));
               Actions re = new Actions(driver);
-              re.dragAndDropBy(resize, 80,30).perform();
+              re.dragAndDropBy(resize, 100,0).perform();
+              re.click();
+
+
+              WebElement labels = wait.until(ExpectedConditions.elementToBeClickable(By.id("mobiles")));
+              System.out.println(labels.getText());
+
+
+             List<String> linkIds = Arrays.asList("apple", "lenovo", "dell");
+
+             for (String linkId : linkIds){
+                 WebElement link = driver.findElement(By.id(linkId));
+                 link.click();
+                 driver.navigate().back();
+             }
 
           }
 
     @AfterMethod
     public void tearDown(){
         if (driver != null){
-            driver.quit();
+            //driver.quit();
         }
     }
 
